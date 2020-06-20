@@ -52,7 +52,7 @@ def provide(txt_path, delimiter='@'):
     if not os.path.exists(txt_path):
         raise ValueError('txt_path does not exists')
     with open(txt_path,'r')as reader:
-        content=np.load(reader,str,delimiter=delimiter)
+        content=np.loadtxt(reader,str,delimiter=delimiter)
     np.random.shuffle(content)
     image_paths=[]
     for line in content:

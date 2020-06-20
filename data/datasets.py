@@ -6,7 +6,7 @@
 import torch
 import torchvision
 import torchvision.transforms as Transform
-import utils
+from data import utils
 import cv2
 import PIL
 import os
@@ -88,7 +88,6 @@ class MattingDataset(torch.utils.data.Dataset):
         image_path, alpha_path = self._image_alpha_paths[index]
         image = PIL.Image.open(image_path)
         alpha = PIL.Image.open(alpha_path)
-
         # Rotate
         #        degree = np.random.randint(low=-30, high=30)
         #        image = image.rotate(degree)
@@ -157,9 +156,10 @@ class MattingDataset(torch.utils.data.Dataset):
         """
         # Format: [[image_path, matting_path, alpha_path, mask_path], ...]
         image_matting_alpha_mask_paths = utils.provide(annotation_path)
+        print(annotation_path)
         # Remove matting_paths, mask_paths
         image_alpha_paths = []
-        for image_path, _, alpha_path, _ in image_matting_alpha_mask_paths:
+        for image_path, _, alpha_path, _,trimap_path in image_matting_alpha_mask_paths:
             if root_dir is not None:
                 if not image_path.startswith(root_dir):
                     image_path = os.path.join(root_dir, image_path)
